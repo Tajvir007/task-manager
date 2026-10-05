@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager | DevOps Practice</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✓</div>
+        <div>
+          <strong>Task Manager</strong>
+          <span>DevOps Practice</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-filter="all"><span>⌂</span> Home</button>
+        <button class="nav-item" data-action="focus-add"><span>＋</span> Add Task</button>
+        <button class="nav-item" data-filter="all"><span>☷</span> All Tasks</button>
+        <button class="nav-item" data-filter="pending"><span>◷</span> Pending</button>
+        <button class="nav-item" data-filter="in-progress"><span>▶</span> In Progress</button>
+        <button class="nav-item" data-filter="completed"><span>✓</span> Completed</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="rocket">🚀</div>
+        <strong>Small steps</strong>
+        <span>make big progress!</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="search-box">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="Search tasks..." />
+        </div>
+        <div class="profile">
+          <button id="themeButton" class="icon-button" title="Toggle theme">☼</button>
+          <div class="avatar">T</div>
+          <span>Tajvir</span>
+          <span>⌄</span>
+        </div>
+      </header>
+
+      <section class="welcome">
+        <div>
+          <div class="welcome-title">👋 Welcome to Task Manager!</div>
+          <p>Organize your work, boost your productivity.</p>
+        </div>
+        <div class="welcome-art">☑️</div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">☷</div>
+          <div><span>Total Tasks</span><strong id="totalCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon amber">◷</div>
+          <div><span>Pending</span><strong id="pendingCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon violet">▶</div>
+          <div><span>In Progress</span><strong id="progressCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon green">✓</div>
+          <div><span>Completed</span><strong id="completedCount">0</strong></div>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <article class="panel add-panel" id="addPanel">
+          <div class="panel-heading">
+            <h2>⊕ Add New Task</h2>
+          </div>
+
+          <form id="taskForm">
+            <label>
+              Task title
+              <input id="titleInput" maxlength="120" required placeholder="e.g. Learn Docker" />
+            </label>
+
+            <label>
+              Description
+              <textarea id="descriptionInput" maxlength="500" placeholder="What do you need to do?"></textarea>
+            </label>
+
+            <div class="form-row">
+              <label>
+                Priority
+                <select id="priorityInput">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+
+              <label>
+                Status
+                <select id="statusInput">
+                  <option value="pending" selected>Pending</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </label>
+            </div>
+
+            <button class="primary-button" type="submit">＋ Add Task</button>
+          </form>
+        </article>
+
+        <article class="panel tasks-panel">
+          <div class="tasks-header">
+            <div>
+              <h2>Tasks</h2>
+              <span id="resultText">Loading...</span>
+            </div>
+            <div class="filters">
+              <button class="filter active" data-filter="all">All</button>
+              <button class="filter" data-filter="pending">Pending</button>
+              <button class="filter" data-filter="in-progress">In Progress</button>
+              <button class="filter" data-filter="completed">Completed</button>
+            </div>
+          </div>
+
+          <div id="taskList" class="task-list"></div>
+
+          <div id="emptyState" class="empty-state hidden">
+            <div>🗂️</div>
+            <strong>No tasks found</strong>
+            <span>Add a task or change your filters.</span>
+          </div>
+        </article>
+      </section>
+
+      <div id="toast" class="toast"></div>
+    </main>
+  </div>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Edit Task</h2>
+        <button id="closeModal" class="icon-button">×</button>
+      </div>
+      <form id="editForm">
+        <input type="hidden" id="editId" />
+        <label>
+          Task title
+          <input id="editTitle" maxlength="120" required />
+        </label>
+        <label>
+          Description
+          <textarea id="editDescription" maxlength="500"></textarea>
+        </label>
+        <div class="form-row">
+          <label>
+            Priority
+            <select id="editPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
+            Status
+            <select id="editStatus">
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </label>
+        </div>
+        <button class="primary-button" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
